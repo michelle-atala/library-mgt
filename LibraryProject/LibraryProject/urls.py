@@ -15,7 +15,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-
+from The_Library.views import index,search
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('index/',index,name='index'),
+    path('search/',search,name='search'),
+
 ]

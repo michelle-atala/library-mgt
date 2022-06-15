@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Librarybooks</title>
+</head>
+<body>
+ <table border="1">
+     {%for x in objects%}
+
+
+  <tr>
+      <td>{{objects.title}}</td>
+      <td>{{objects.publication_date}}</td>
+      <td>{{objects.author}}</td>
+      <td>{{objects.shelf_number}}</td>
+      <td>{{objects.subject_area}}</td>
+
+  </tr>
+     {%endfor%}
+
+ </table>
+</body>
+</html>
