@@ -7,6 +7,10 @@ def login (request):
 
     return HttpResponse(template.render())
 
+def sign_up (request):
+    template=loader.get_template("sign_up.html")
+
+    return HttpResponse(template.render())
 
 # Create your views here.
 
