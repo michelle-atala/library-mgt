@@ -1,4 +1,6 @@
 from django.db import models
+
+
 class book(models.Model):
     publication_date= models.DateField()
     author = models.TextField(max_length=50)

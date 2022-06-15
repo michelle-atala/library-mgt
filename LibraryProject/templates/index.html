@@ -5,18 +5,22 @@
     <title>Librarybooks</title>
 </head>
 <body>
- <table border="1">
-     {%for x in objects%}
-
-
-  <tr>
-      <td>{{objects.title}}</td>
-      <td>{{objects.publication_date}}</td>
-      <td>{{objects.author}}</td>
-      <td>{{objects.shelf_number}}</td>
-      <td>{{objects.subject_area}}</td>
-
-  </tr>
+ <table border="1" align="center">
+     <tr>
+         <td><b>Title</b></td>
+         <td><b>Publication Date</b></td>
+         <td><b>Author</b></td>
+         <td><b>Shelf Number</b></td>
+         <td><b>Subject Area</b></td>
+     </tr>
+     {%for x in books%}
+      <tr>
+          <td>{{x.title}}</td>
+          <td>{{x.publication_date}}</td>
+          <td>{{x.author}}</td>
+          <td>{{x.shelf_number}}</td>
+          <td>{{x.subject_area}}</td>
+      </tr>
      {%endfor%}
 
  </table>
