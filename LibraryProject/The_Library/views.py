@@ -5,23 +5,14 @@ from .forms import Book_search
 
 
 # Create your views here.
-def search(request, *args, **kwargs):
-    # Michelle please uncomment the code when you need to see if the errors disappear after the fields creation.
+def search(request, *args, **kwargs):  # function called on first access to search.html
 
-    if request.method == 'GET':  # Checking if the request is GET to bind the user data to a fresh form.
-        form = Book_search(request.GET)
-
-        if form.is_valid():
-            title = request.cleaned_data['title']
-            obj = list(book.objects.filter(title__icontains=title))  # Using contains to take care of word-spacing.
-
-            my_ctxt = {
-                "object": obj
-            }
-            return redirect(search_result(request, my_ctxt))
-
-
-
+    if request.method == 'GET':
+        my_form = Book_search()
+        my_ctxt = {
+            "form": my_form
+        }
+        return render(request, "search.html", my_ctxt)
     else:  # Render a 400 code
 
         return HttpResponseBadRequest("<h1>{{request.method}} is not appropriate for this.")
@@ -55,11 +46,27 @@ def index(request):
     return render(request, 'index.html', context)
 
 
-def search_result(request, ctxt):  # Display search results using index.html
-    title = ctxt.title
-    my_query = book.objects.filter(title=title)
+def search_result(request):  # Display search results using index.html # Called after submit button is clicked
+    if request.method == 'GET':  # Checking if the request is GET to bind the user data to a fresh form.
+        form = Book_search(request.GET)
 
-    context = {
-        "books": my_query
-    }
-    return render(request, 'index.html', context)
+        if form.is_valid():
+            title = request.cleaned_data['title']
+            obj = list(book.objects.filter(title__icontains=title))  # Using contains to take care of word-spacing.
+
+            my_ctxt = {
+                "object": obj
+            }
+            # d_title = obj.title
+            # my_query = book.objects.filter(title=title)
+
+            # context = {
+            #     "books": my_query
+            # }
+            return render(request, 'index.html', my_ctxt)
+
+
+
+    else:  # Render a 400 code
+
+        return HttpResponseBadRequest("<h1>{{request.method}} is not appropriate for this.")
