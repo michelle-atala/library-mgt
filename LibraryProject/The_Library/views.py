@@ -51,14 +51,18 @@ def search_result(request):  # Display search results using index.html # Called 
         form = Book_search(request.GET)
 
         if form.is_valid():
-            title = request.cleaned_data['title']
-            obj = list(book.objects.filter(title__icontains=title))  # Using contains to take care of word-spacing.
+
+            subject_area = form.cleaned_data['subject_area']
+            print(subject_area)
+            obj = list(book.objects.filter(subject_area__icontains=subject_area))  # Using contains to take care of word-spacing.
 
             my_ctxt = {
-                "object": obj
+
+                "books": obj,
             }
             # d_title = obj.title
             # my_query = book.objects.filter(title=title)
+            print(obj)
 
             # context = {
             #     "books": my_query
