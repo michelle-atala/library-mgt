@@ -1,5 +1,8 @@
 from django import forms
+<<<<<<< HEAD
 from .models import Student
+=======
+>>>>>>> ea596d074a4de83edc79ae16798a6c242e75673e
 
 class SignUp_form(forms.Form):
     first_name=forms.CharField(max_length=50)
@@ -8,6 +11,7 @@ class SignUp_form(forms.Form):
     email=forms.EmailField()
     password=forms.CharField(max_length=50)
 
+<<<<<<< HEAD
 class Login_form(forms.Form):
     user_name=forms.CharField(max_length=50)
     password=forms.CharField(max_length=50)
@@ -23,3 +27,5 @@ def clean_data (self):
     return user_name,password
 
 
+=======
+>>>>>>> ea596d074a4de83edc79ae16798a6c242e75673e
