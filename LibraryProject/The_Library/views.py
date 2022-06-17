@@ -2,13 +2,29 @@ from django.shortcuts import render,redirect
 from django.template import loader
 
 from django.http import HttpResponse
-from .forms import SignUp_form
+from .forms import SignUp_form,Login_form
 from .models import Student
 
 def login (request):
-    template=loader.get_template("login.html")
 
-    return HttpResponse(template.render())
+    if request.method=="GET":
+       form=Login_form(request.GET)
+       context = {
+           "form": form
+       }
+       print("__init__")
+       return render(request, "login.html", context)
+
+       #if form.is_valid():
+
+
+
+          #  user_name=form.cleaned_data['user_name']
+           # password=form.cleaned_data['password']
+
+
+
+
 
 def sign_up (request):
     if request.method=='POST':
@@ -35,15 +51,6 @@ def sign_up (request):
 
         }
         return render(request,'sign_up.html',context)
-
-
-
-
-
-
-
-
-
 
 
 
