@@ -1,4 +1,4 @@
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render,redirect
 from django.template import loader
 
@@ -7,7 +7,7 @@ from .forms import SignUp_form,Login_form
 from .models import Student
 from django.contrib.auth.models import User
 
-def login (request):
+def log_in (request):
 
     if request.method=="GET":
        form=Login_form()
@@ -23,12 +23,15 @@ def login_verify(request):
         if form.is_valid():
             user_name = form.cleaned_data['user_name']
             password = form.cleaned_data['password']
+            # print(request.user)
             user=authenticate(username=user_name,password=password)
 
             if user is not None:
+                login(request, user)
+                # print(request.user)
                 return render(request,'Base.html')
             else:
-                return login(request)
+                return log_in(request)
 
 
 
@@ -54,7 +57,7 @@ def sign_up (request):
             user = User.objects.create_user(user_name,email,password,first_name=first_name,last_name=last_name)
             user.save()
 
-            return redirect(login)
+            return redirect(log_in)
 
 
     else:
@@ -66,6 +69,11 @@ def sign_up (request):
         }
         return render(request,'sign_up.html',context)
 
+
+def log_out(request):
+    logout(request)
+    #print(request.user)
+    return redirect(log_in)
 
 
 
