@@ -19,7 +19,10 @@ from django.contrib import admin, staticfiles
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.urls import path
 from The_Library.views import index, search, search_result
+from django.views.generic import TemplateView
+
 urlpatterns = [
+    path('admin/report', TemplateView.as_view(template_name='admin/report.html'), name='report'),
     path('admin/', admin.site.urls),
     path('index/',index,name='index'),
     path('search/',search,name='search'),
