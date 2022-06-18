@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1> Your request has been submitted! Pick up the book at the Library.</h1>
+<h2> Redirecting to homepage... (This takes about 5 seconds)</h2>
+<script>
+    setTimeout(function(){
+    $.get("{% url 'index.html' %}"), 5000)
+    }
+</script>
+
+</body>
+</html>

@@ -18,7 +18,7 @@ from django.conf.urls.static import static
 from django.contrib import admin, staticfiles
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.urls import path
-from The_Library.views import index, search, search_result
+from The_Library.views import index, search, search_result, borrow, terms
 from django.views.generic import TemplateView
 
 urlpatterns = [
@@ -26,7 +26,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('index/',index,name='index'),
     path('search/',search,name='search'),
-    path('search-result/', search_result, name='search_result')
+    path('search-result/', search_result, name='search_result'),
+    path('terms/<int:id>', terms),
+    path('borrow/<int:id>', borrow)
 
 ]
 # urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_FILES)

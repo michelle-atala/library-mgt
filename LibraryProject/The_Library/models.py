@@ -16,10 +16,12 @@ class book(models.Model):
 class borrowed_book(models.Model):
     returned= models.BooleanField()
     book_id=models.ForeignKey(book,on_delete=models.CASCADE)
+    book_name=models.CharField(max_length=100)
     student=models.CharField(max_length=100)
     borrow_date=models.DateField()
-    return_date=models.DateField()
-    penalty_due=models.IntegerField()
+    return_date=models.DateField(null=True)
+    penalty_due=models.IntegerField(default=0)
+
 
     def __str__(self):
         return f"{self.student},{self.book_id},{self.borrow_date},{self.return_date},{self.returned},{self.penalty_due}"
