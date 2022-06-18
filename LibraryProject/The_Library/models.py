@@ -7,6 +7,15 @@ class book(models.Model):
     subject_area = models.CharField(max_length=50)
     title = models.TextField(max_length=50)
     shelf_number = models.CharField(max_length=10)
+    borrowed= models.BooleanField(default=False)
+
+
+    def __str__(self):
+        return f"{self.title},{self.author},{self.shelf_number}"
+
+
+
+
 
 
 #class borrowed(models.Model):
