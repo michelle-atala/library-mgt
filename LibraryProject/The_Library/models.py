@@ -16,7 +16,7 @@ class book(models.Model):
 class borrowed_book(models.Model):
     returned= models.BooleanField()
     book_id=models.ForeignKey(book,on_delete=models.CASCADE)
-    book_name=models.CharField(max_length=100)
+    book_name=models.CharField(max_length=100, default="") #Remove default on Fresh DB creation
     student=models.CharField(max_length=100)
     borrow_date=models.DateField()
     return_date=models.DateField(null=True)
