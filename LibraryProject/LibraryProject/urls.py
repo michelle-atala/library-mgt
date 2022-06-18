@@ -20,6 +20,6 @@ from The_Library.views import login,sign_up
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('login/',login),
-    path('sign_up/',sign_up),
+    path('sign_up/',sign_up,name="SignUp"),
 
 ]
