@@ -1,26 +1,37 @@
+from django.contrib.auth import authenticate
 from django.shortcuts import render,redirect
 from django.template import loader
 
 from django.http import HttpResponse
 from .forms import SignUp_form,Login_form
 from .models import Student
+from django.contrib.auth.models import User
 
 def login (request):
 
     if request.method=="GET":
-       form=Login_form(request.GET)
+       form=Login_form()
        context = {
            "form": form
        }
        print("__init__")
        return render(request, "login.html", context)
 
-       #if form.is_valid():
+def login_verify(request):
+    if request.method=="GET":
+        form=Login_form(request.GET)
+        if form.is_valid():
+            user_name = form.cleaned_data['user_name']
+            password = form.cleaned_data['password']
+            user=authenticate(username=user_name,password=password)
+
+            if user is not None:
+                return render(request,'Base.html')
+            else:
+                return login(request)
 
 
 
-          #  user_name=form.cleaned_data['user_name']
-           # password=form.cleaned_data['password']
 
 
 
@@ -38,8 +49,11 @@ def sign_up (request):
             password=form.cleaned_data['password']
             print(form.cleaned_data)
 
-            object =Student.objects.create(first_name=first_name,last_name=last_name,user_name=user_name,email=email,password=password)
-            object.save()
+            # object =Student.objects.create(first_name=first_name,last_name=last_name,user_name=user_name,email=email,password=password)
+            # object.save()
+            user = User.objects.create_user(user_name,email,password,first_name=first_name,last_name=last_name)
+            user.save()
+
             return redirect(login)
 
 

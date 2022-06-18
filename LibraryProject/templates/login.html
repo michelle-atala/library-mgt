@@ -5,7 +5,7 @@
     <title>LOGIN</title>
 </head>
 <body>
-<form>
+<form action="{% url 'verify' %}" method="GET">{% csrf_token %}
     <center>
 
     <h1>LOGIN</h1>
