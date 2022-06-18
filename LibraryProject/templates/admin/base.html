@@ -1,0 +1,7 @@
+{% extends "admin/base.html" %}
+
+{% block userlinks %}
+    {{block.super}}
+   / <a href="{% url 'report'%}">REPORT</a>
+
+ {% endblock %}
