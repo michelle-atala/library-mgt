@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Borrow Report</title>
+</head>
+<body>
+<table border="1">
+  {% for x in objects %}
+    <tr>
+        <td>{{x.returned}}</td>
+        <td>{{x.book_id}}</td>
+        <td>{{x.student_id}}</td>
+        <td>{{x.borrow_date}}</td>
+        <td>{{x.return_date}}</td>
+        <td>{{x.penalty_due}}</td>
+
+    </tr>
+    {% endfor %}
+
+</table>
+</body>
+</html>

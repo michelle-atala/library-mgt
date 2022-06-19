@@ -1,9 +1,14 @@
 from django.contrib import admin
-from .models import book,Student
-admin.site.register(book)
-@admin.register(Student)
+from .models import book
+from .models import borrowed_book
 
-class Students(admin.ModelAdmin):
-    list_display=("first_name","last_name","user_name","email")
+@admin.register(book)
 
+class bookAdmin(admin.ModelAdmin):
+    list_display = ("title","author","shelf_number")
+
+@admin.register(borrowed_book)
+
+class borrowed_bookAdmin(admin.ModelAdmin):
+    list_display = ("student","book_id","borrow_date","return_date","returned","penalty_due")
 # Register your models here.

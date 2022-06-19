@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Book_Request </title>
+</head>
+<body>
+<form action="{% url 'search_result' %}" method="GET">{%csrf_token%}
+{{form.as_p}}
+    <input type="submit" value="search"/>
+</form>
+
+</body>
+</html>
