@@ -1,10 +1,12 @@
 from django import forms
 
 from .models import Student
+from django.contrib.auth import get_user_model
 
 
 
 class SignUp_form(forms.Form):
+
     first_name=forms.CharField(max_length=50)
     last_name=forms.CharField(max_length=50)
     user_name=forms.CharField(max_length=50)

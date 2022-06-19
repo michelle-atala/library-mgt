@@ -2,10 +2,25 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <!--link rel="stylesheet" href="style.css"-->
+    <style>
+        .center {
+    margin: auto;
+    width: 40%;
+    border: 3px solid powderblue;
+    padding: 10px;
+    background-color:beige;
+    center vertically;
+        }
+    </style>
     <title>LOGIN</title>
+
 </head>
 <body>
+<div class="center">
 <form action="{% url 'verify' %}" method="GET">{% csrf_token %}
+
+
     <center>
 
     <h1>LOGIN</h1>
@@ -15,9 +30,9 @@
 <!--    PASSWORD:<br>-->
 <!--    <input type ="password"><br><br>-->
      {{form.as_p}}
-    <input type ="submit" value="login" style="background-color:sky;height:50px;width:100px" >
+    <input type ="submit" value="LOGIN" style="background-color:sky;height:30px;width:70px" >
 
     </center>
-</form>
+</form></div>
 </body>
 </html>

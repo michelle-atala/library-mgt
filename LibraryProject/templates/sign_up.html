@@ -2,14 +2,25 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <style>
+          .center {
+    margin: auto;
+    width: 40%;
+    border: 3px solid powderblue;
+    padding: 10px;
+    background-color:beige;
+    center vertically;
+        }
+    </style>
     <title>Sign_up</title>
 </head>
 <body>
+<div class="center">
 <center>
 <form action="." method="POST">
     {% csrf_token %}
     <h1>SIGN UP</h1>
-
+    <p> Already have an account?<a href="{% url 'Login' %}">Login</a></p>
 <!--    FIRST NAME:<br>-->
 <!--    <input name="first_name"><br><br>-->
 <!--    LAST NAME:<br>-->
@@ -22,9 +33,12 @@
 <!--    <input name ="email"><br><br>-->
     {{ form.as_p }}
 
-    <input type ="submit" value="SIGN UP" style="background-color:blue">
+    <input type ="submit" value="SIGN UP" style="background-color:sky;height:30px;width:70px">
 
 
-</form></center>
+
+</form>
+</center>
+</div>
 </body>
 </html>

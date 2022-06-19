@@ -19,7 +19,7 @@ from The_Library.views import log_in,sign_up,login_verify,log_out
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('login/',log_in),
+    path('login/',log_in,name="Login"),
     path('sign_up/',sign_up,name="SignUp"),
     path('verify/',login_verify,name="verify"),
     path('logout',log_out,name="logout"),
