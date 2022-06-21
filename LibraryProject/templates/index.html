@@ -5,6 +5,14 @@
 
 <html lang="en">
 <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+   <script>
+   $(document).ready(function($) {
+    $(".clickable-row").click(function() {
+        window.location = $(this).data("href");
+    });
+});
+</script>
     {% block title %}
     <title>Library Books</title>
     {% endblock %}
@@ -25,7 +33,7 @@
      <tbody>
      {%for x in books%}
 
-      <tr>
+      <tr class="clickable-table" data-href="Base.html">
 
           <td>{{x.title}}</td>
           <td>{{x.publication_date}}</td>
