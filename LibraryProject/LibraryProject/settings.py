@@ -16,6 +16,7 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 TEMPLATE_DIR = os.path.join(BASE_DIR, "templates")
 STATIC_FILES = os.path.join(BASE_DIR, "staticfiles")
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 
 # Quick-start development settings - unsuitable for production
@@ -40,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'The_Library',
+    'crispy_forms'
 
 ]
 
