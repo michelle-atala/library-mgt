@@ -68,17 +68,20 @@ def sign_up(request):
 
 
 def log_out(request):
-    logout(request)
-    # print(request.user)
-    return redirect(log_in)
+    if request.user.is_authenticated:
+        logout(request)
+        # print(request.user)
+        return redirect(log_in)
+    else:
+        redirect("/login/")
 
-    # template=loader.get_template("sign_up.html")
-    # HttpResponse(template.render())
+        # template=loader.get_template("sign_up.html")
+        # HttpResponse(template.render())
 
 
 # Create your views here.
 def search(request, *args, **kwargs):  # function called on first access to search.html
-
+ if request.user.is_authenticated:
     if request.method == 'GET':
         my_form = Book_search()
         my_ctxt = {
@@ -88,6 +91,10 @@ def search(request, *args, **kwargs):  # function called on first access to sear
     else:  # Render a 400 code
 
         return HttpResponseBadRequest("<h1>{{request.method}} is not appropriate for this.")
+ else:
+     redirect("/login/")
+
+
 
 
 #  DON'T REMOVE THIS INDEX FUNCTION
@@ -108,6 +115,7 @@ def search(request, *args, **kwargs):  # function called on first access to sear
 #      return render(request, "index.html", my_ctxt)
 
 def index(request):
+  if request.user.is_authenticated:
     my_books = book.objects.all()
 
     context = {
@@ -116,9 +124,12 @@ def index(request):
     }
 
     return render(request, 'index.html', context)
+  else:
+      return redirect("/login/")
 
 
 def search_result(request):  # Display search results using index.html # Called after submit button is clicked
+  if request.user.is_authenticated:
     if request.method == 'GET':  # Checking if the request is GET to bind the user data to a fresh form.
         form = Book_search(request.GET)
 
@@ -146,9 +157,12 @@ def search_result(request):  # Display search results using index.html # Called 
     else:  # Render a 400 code
 
         return HttpResponseBadRequest("<h1>{{request.method}} is not appropriate for this.")
+  else:
+      return redirect("/login/")
 
 
 def borrow(request, id):
+  if request.user.is_authenticated:
     book_id = id
     returned = False
     student = request.user.get_full_name()
@@ -160,9 +174,12 @@ def borrow(request, id):
                                                book_id=book_id)
     transaction.save()
     return render(request, "borrowed.hml")
+  else:
+      return redirect("/login/")
 
 
 def report(request):
+  if request.user.is_authenticated:
     obj = borrowed_book.objects.all()
     for x in obj:
         return_date = x.borrow_date + datetime.timedelta(weeks=2)
@@ -179,11 +196,16 @@ def report(request):
     }
 
     return render(request, "report.html", my_ctxt)
+  else:
+      return redirect("/login/")
 
 
 def terms(request, id):
+  if request.user.is_authenticated:
     obj = book.objects.filter(id=id)
     my_ctxt = {
         "book": obj
     }
     return render(request, "terms.html", my_ctxt)
+  else:
+      return redirect("/login/")
