@@ -32,7 +32,7 @@ def login_verify(request):
             if user is not None:
                 login(request, user)
                 # print(request.user)
-                return render(request, 'Base.html')
+                return redirect(index)
             else:
                 return log_in(request)
 
@@ -47,7 +47,7 @@ def sign_up(request):
             user_name = form.cleaned_data['user_name']
             email = form.cleaned_data['email']
             password = form.cleaned_data['password']
-            print(form.cleaned_data)
+            #print(form.cleaned_data)
 
             # object =Student.objects.create(first_name=first_name,last_name=last_name,user_name=user_name,email=email,password=password)
             # object.save()
@@ -64,6 +64,7 @@ def sign_up(request):
             "form": form1
 
         }
+        print("Empty form")
         return render(request, 'sign_up.html', context)
 
 
