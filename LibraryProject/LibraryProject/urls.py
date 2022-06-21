@@ -13,24 +13,20 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.conf import settings
-from django.conf.urls.static import static
-from django.contrib import admin, staticfiles
-from django.contrib.staticfiles.urls import staticfiles_urlpatterns
-from django.urls import path
-from The_Library.views import log_in,sign_up,login_verify,log_out
 from The_Library.views import index, search, search_result, borrow, terms, report
-from django.views.generic import TemplateView
+from The_Library.views import log_in, sign_up, login_verify, log_out
+from django.contrib import admin
+from django.urls import path
 
 urlpatterns = [
     path('admin/report', report, name='report'),
     path('admin/', admin.site.urls),
-    path('login/',log_in,name="Login"),
-    path('sign_up/',sign_up,name="SignUp"),
-    path('verify/',login_verify,name="verify"),
-    path('logout',log_out,name="logout"),
-    path('index/',index,name='index'),
-    path('search/',search,name='search'),
+    path('login/', log_in, name="Login"),
+    path('sign_up/', sign_up, name="SignUp"),
+    path('verify/', login_verify, name="verify"),
+    path('logout', log_out, name="logout"),
+    path('index/', index, name='index'),
+    path('search/', search, name='search'),
     path('search-result/', search_result, name='search_result'),
     path('terms/<int:id>', terms),
     path('borrow/<int:id>', borrow)
