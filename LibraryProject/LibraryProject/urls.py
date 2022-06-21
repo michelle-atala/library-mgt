@@ -19,11 +19,11 @@ from django.contrib import admin, staticfiles
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.urls import path
 from The_Library.views import log_in,sign_up,login_verify,log_out
-from The_Library.views import index, search, search_result, borrow, terms
+from The_Library.views import index, search, search_result, borrow, terms, report
 from django.views.generic import TemplateView
 
 urlpatterns = [
-    path('admin/report', TemplateView.as_view(template_name='admin/report.html'), name='report'),
+    path('admin/report', report, name='report'),
     path('admin/', admin.site.urls),
     path('login/',log_in,name="Login"),
     path('sign_up/',sign_up,name="SignUp"),

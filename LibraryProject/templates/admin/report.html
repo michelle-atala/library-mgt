@@ -1,3 +1,5 @@
+{% extends "Base.html" %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,8 +7,25 @@
     <title>Borrow Report</title>
 </head>
 <body>
-<table border="1">
-  {% for x in objects %}
+{% block table %}
+<thead>
+    <tr>
+        <th scope="col">Return</th>
+        <th scope="col">Book Id</th>
+        <th scope="col">Book name</th>
+        <th scope="col">Student</th>
+        <th scope="col">Borrow Date</th>
+        <th scope="col">Return Date</th>
+        <th scope="col">Penalty Due</th>
+
+    </tr>
+
+
+</thead>
+{% endblock %}
+<tbody>
+
+  {% for x in books %}
     <tr>
         <td>{{x.returned}}</td>
         <td>{{x.book_id}}</td>
@@ -17,7 +36,7 @@
 
     </tr>
     {% endfor %}
+</tbody>
 
-</table>
 </body>
 </html>

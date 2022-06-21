@@ -209,3 +209,12 @@ def terms(request, id):
     return render(request, "terms.html", my_ctxt)
   else:
       return redirect("/login/")
+
+
+def report(request):
+    obj = borrowed_book.objects.all()
+    my_ctxt = {
+        "books": obj
+
+    }
+    return render(request,"admin/report.html",my_ctxt)
