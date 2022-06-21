@@ -49,8 +49,8 @@ def sign_up(request):
             password = form.cleaned_data['password']
             print(form.cleaned_data)
 
-            # object =Student.objects.create(first_name=first_name,last_name=last_name,user_name=user_name,email=email,password=password)
-            # object.save()
+            # object =Student.objects.create(first_name=first_name,last_name=last_name,user_name=user_name,
+            # email=email,password=password) object.save()
             user = User.objects.create_user(user_name, email, password, first_name=first_name, last_name=last_name)
             user.save()
 
@@ -80,21 +80,19 @@ def log_out(request):
 
 
 # Create your views here.
-def search(request, *args, **kwargs):  # function called on first access to search.html
- if request.user.is_authenticated:
-    if request.method == 'GET':
-        my_form = Book_search()
-        my_ctxt = {
-            "form": my_form
-        }
-        return render(request, "search.html", my_ctxt)
-    else:  # Render a 400 code
+def search(request):  # function called on first access to search.html
+    if request.user.is_authenticated:
+        if request.method == 'GET':
+            my_form = Book_search()
+            my_ctxt = {
+                "form": my_form
+            }
+            return render(request, "search.html", my_ctxt)
+        else:  # Render a 400 code
 
-        return HttpResponseBadRequest("<h1>{{request.method}} is not appropriate for this.")
- else:
-     return redirect("/login/")
-
-
+            return HttpResponseBadRequest("<h1>{{request.method}} is not appropriate for this.")
+    else:
+        return redirect("/login/")
 
 
 #  DON'T REMOVE THIS INDEX FUNCTION
@@ -115,100 +113,100 @@ def search(request, *args, **kwargs):  # function called on first access to sear
 #      return render(request, "index.html", my_ctxt)
 
 def index(request):
-  if request.user.is_authenticated:
-    my_books = book.objects.all()
+    if request.user.is_authenticated:
+        my_books = book.objects.all()
 
-    context = {
-        'books': my_books
+        context = {
+            'books': my_books
 
-    }
+        }
 
-    return render(request, 'index.html', context)
-  else:
-      return redirect("/login/")
+        return render(request, 'index.html', context)
+    else:
+        return redirect("/login/")
 
 
 def search_result(request):  # Display search results using index.html # Called after submit button is clicked
-  if request.user.is_authenticated:
-    if request.method == 'GET':  # Checking if the request is GET to bind the user data to a fresh form.
-        form = Book_search(request.GET)
+    if request.user.is_authenticated:
+        if request.method == 'GET':  # Checking if the request is GET to bind the user data to a fresh form.
+            form = Book_search(request.GET)
 
-        if form.is_valid():
-            subject_area = form.cleaned_data['subject_area']
-            print(subject_area)
-            obj = list(book.objects.filter(
-                subject_area__icontains=subject_area))  # Using contains to take care of word-spacing.
+            if form.is_valid():
+                subject_area = form.cleaned_data['subject_area']
+                print(subject_area)
+                obj = list(book.objects.filter(
+                    subject_area__icontains=subject_area))  # Using contains to take care of word-spacing.
 
-            my_ctxt = {
+                my_ctxt = {
 
-                "books": obj,
-            }
-            # d_title = obj.title
-            # my_query = book.objects.filter(title=title)
-            print(obj)
+                    "books": obj,
+                }
+                # d_title = obj.title
+                # my_query = book.objects.filter(title=title)
+                print(obj)
 
-            # context = {
-            #     "books": my_query
-            # }
-            return render(request, 'index.html', my_ctxt)
+                # context = {
+                #     "books": my_query
+                # }
+                return render(request, 'index.html', my_ctxt)
 
 
 
-    else:  # Render a 400 code
+        else:  # Render a 400 code
 
-        return HttpResponseBadRequest("<h1>{{request.method}} is not appropriate for this.")
-  else:
-      return redirect("/login/")
+            return HttpResponseBadRequest("<h1>{{request.method}} is not appropriate for this.")
+    else:
+        return redirect("/login/")
 
 
 def borrow(request, id):
-  if request.user.is_authenticated:
-    book_id = id
-    returned = False
-    student = request.user.get_full_name()
-    borrow_date = datetime.date.today()
-    book_name = book.objects.filter(id=id).title
+    if request.user.is_authenticated:
+        book_id = id
+        returned = False
+        student = request.user.get_full_name()
+        borrow_date = datetime.date.today()
+        book_name = book.objects.filter(id=id).title
 
-    transaction = borrowed_book.objects.create(returned=returned, student=student, book_name=book_name,
-                                               borrow_date=borrow_date,
-                                               book_id=book_id)
-    transaction.save()
-    return render(request, "borrowed.hml")
-  else:
-      return redirect("/login/")
+        transaction = borrowed_book.objects.create(returned=returned, student=student, book_name=book_name,
+                                                   borrow_date=borrow_date,
+                                                   book_id=book_id)
+        transaction.save()
+        return render(request, "borrowed.hml")
+    else:
+        return redirect("/login/")
 
 
 def report(request):
-  if request.user.is_authenticated:
-    obj = borrowed_book.objects.all()
-    for x in obj:
-        return_date = x.borrow_date + datetime.timedelta(weeks=2)
-        time_elapse = datetime.date.today() - return_date
-        if time_elapse.days > 10:
-            x.penalty_due = 15000
-        elif time_elapse.days > 3:
-            x.penalty_due = 5000
+    if request.user.is_authenticated:
+        obj = borrowed_book.objects.all()
+        for x in obj:
+            return_date = x.borrow_date + datetime.timedelta(weeks=2)
+            time_elapse = datetime.date.today() - return_date
+            if time_elapse.days > 10:
+                x.penalty_due = 15000
+            elif time_elapse.days > 3:
+                x.penalty_due = 5000
 
-    obj = borrowed_book.objects.all()
+        obj = borrowed_book.objects.all()
 
-    my_ctxt = {
-        "books": obj
-    }
+        my_ctxt = {
+            "books": obj
+        }
 
-    return render(request, "report.html", my_ctxt)
-  else:
-      return redirect("/login/")
+        return render(request, "report.html", my_ctxt)
+    else:
+        return redirect("/login/")
 
 
 def terms(request, id):
-  if request.user.is_authenticated:
-    obj = book.objects.filter(id=id)
-    my_ctxt = {
-        "book": obj
-    }
-    return render(request, "terms.html", my_ctxt)
-  else:
-      return redirect("/login/")
+    if request.user.is_authenticated:
+        obj = book.objects.filter(id=id)
+        my_ctxt = {
+            "book": obj
+        }
+        return render(request, "terms.html", my_ctxt)
+    else:
+        return redirect("/login/")
 
 
 def report(request):
@@ -217,4 +215,4 @@ def report(request):
         "books": obj
 
     }
-    return render(request,"admin/report.html",my_ctxt)
+    return render(request, "admin/report.html", my_ctxt)
