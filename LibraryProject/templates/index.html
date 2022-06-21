@@ -1,41 +1,43 @@
+{% extends "Base.html" %}
 <!--{% load static %}-->
 
 <!DOCTYPE html>
 
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    {% block title %}
     <title>Library Books</title>
-<!--    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">-->
-    <style>
-    tr{
-        background-color: lightblue;
-
-    }
-    tr:nth-child(even) {background-color: lightgreen;}
-
-</style>
+    {% endblock %}
 </head>
 <body>
 
- <table border="1" align="center">
-     <tr>
-         <td><b>Title</b></td>
-         <td><b>Publication Date</b></td>
-         <td><b>Author</b></td>
-         <td><b>Shelf Number</b></td>
-         <td><b>Subject Area</b></td>
-     </tr>
+
+{% block table %}
+     <thead>
+    <tr>
+      <th scope="col">Title</th>
+      <th scope="col">Publication Date</th>
+      <th scope="col">Author</th>
+      <th scope="col">Shelf Number</th>
+        <th scope="col">Subject Area</th>
+    </tr>
+  </thead>
+     <tbody>
      {%for x in books%}
+
       <tr>
+
           <td>{{x.title}}</td>
           <td>{{x.publication_date}}</td>
           <td>{{x.author}}</td>
           <td>{{x.shelf_number}}</td>
           <td>{{x.subject_area}}</td>
-      </tr>
-     {%endfor%}
 
- </table>
+    </tr>
+
+      </tbody>
+     {%endfor%}
+{% endblock %}
+
 </body>
 </html>

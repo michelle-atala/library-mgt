@@ -1,38 +1,44 @@
+{% extends "Base.html" %}
+{% load crispy_forms_tags %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <!--link rel="stylesheet" href="style.css"-->
-    <style>
-        .center {
-    margin: auto;
-    width: 40%;
-    border: 3px solid powderblue;
-    padding: 10px;
-    background-color:beige;
-    center vertically;
-        }
-    </style>
+<!--    <style>-->
+<!--        .center {-->
+<!--    margin: auto;-->
+<!--    width: 40%;-->
+<!--    border: 3px solid powderblue;-->
+<!--    padding: 10px;-->
+<!--    background-color:beige;-->
+<!--    center vertically;-->
+<!--        }-->
+<!--    </style>-->
     <title>LOGIN</title>
 
 </head>
 <body>
-<div class="center">
+<!--<div class="center">-->
+{% block content %}
 <form action="{% url 'verify' %}" method="GET">{% csrf_token %}
 
 
-    <center>
+<!--    <center>-->
 
     <h1>LOGIN</h1>
-    Don't have an account? <a href="{% url 'SignUp' %}">SignUp</a>
+    Don't have an account? <a href="{% url 'SignUp' %}">Sign up</a>
 <!--    USERNAME:<br>-->
 <!--    <input name ="user_name"><br><br>-->
 <!--    PASSWORD:<br>-->
 <!--    <input type ="password"><br><br>-->
-     {{form.as_p}}
-    <input type ="submit" value="LOGIN" style="background-color:sky;height:30px;width:70px" >
+     {{form|crispy}}
+<!--    <input type ="submit" value="LOGIN" style="background-color:sky;height:30px;width:70px" >-->
+        <button type="submit" class="btn btn-primary">Login</button>
 
-    </center>
-</form></div>
+<!--    </center>-->
+</form>
+{% endblock %}
+<!--</div>-->
 </body>
 </html>
