@@ -32,7 +32,7 @@ def login_verify(request):
             if user is not None:
                 login(request, user)
                 # print(request.user)
-                return redirect(index)
+                return redirect("/index/")
             else:
                 return log_in(request)
 
@@ -47,7 +47,7 @@ def sign_up(request):
             user_name = form.cleaned_data['user_name']
             email = form.cleaned_data['email']
             password = form.cleaned_data['password']
-            #print(form.cleaned_data)
+            print(form.cleaned_data)
 
             # object =Student.objects.create(first_name=first_name,last_name=last_name,user_name=user_name,email=email,password=password)
             # object.save()
@@ -64,7 +64,6 @@ def sign_up(request):
             "form": form1
 
         }
-        print("Empty form")
         return render(request, 'sign_up.html', context)
 
 
@@ -93,7 +92,7 @@ def search(request, *args, **kwargs):  # function called on first access to sear
 
         return HttpResponseBadRequest("<h1>{{request.method}} is not appropriate for this.")
  else:
-     redirect("/login/")
+     return redirect("/login/")
 
 
 
@@ -210,3 +209,12 @@ def terms(request, id):
     return render(request, "terms.html", my_ctxt)
   else:
       return redirect("/login/")
+
+
+def report(request):
+    obj = borrowed_book.objects.all()
+    my_ctxt = {
+        "books": obj
+
+    }
+    return render(request,"admin/report.html",my_ctxt)
