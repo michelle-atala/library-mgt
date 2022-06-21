@@ -1,26 +1,22 @@
+{% extends "Base.html" %}
+{% load crispy_forms_tags %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <style>
-          .center {
-    margin: auto;
-    width: 40%;
-    border: 3px solid powderblue;
-    padding: 10px;
-    background-color:beige;
-    center vertically;
-        }
-    </style>
-    <title>Sign_up</title>
+{% block title %}
+<title>Sign up</title>
+{% endblock %}
+
 </head>
 <body>
-<div class="center">
-<center>
-<form action="." method="POST">
-    {% csrf_token %}
+
+{% block content %}
+<div class="col d-flex justify-content-center ">
+<div class="card " style="width: 30rem;">
+<form action="." method="POST">{% csrf_token %}
     <h1>SIGN UP</h1>
-    <p> Already have an account?<a href="{% url 'Login' %}">Login</a></p>
+    <h5> Already have an account? <a href="{% url 'Login' %}">Login</a></h5>
 <!--    FIRST NAME:<br>-->
 <!--    <input name="first_name"><br><br>-->
 <!--    LAST NAME:<br>-->
@@ -31,14 +27,14 @@
 <!--    <input type ="password"><br><br>-->
 <!--    EMAIL:<br>-->
 <!--    <input name ="email"><br><br>-->
-    {{ form.as_p }}
-
-    <input type ="submit" value="SIGN UP" style="background-color:sky;height:30px;width:70px">
-
-
+    {{ form|crispy }}
+  <input type ="button" value="Sign up" class="btn btn-primary">
 
 </form>
-</center>
 </div>
+</div>
+{% endblock %}
+
+
 </body>
 </html>

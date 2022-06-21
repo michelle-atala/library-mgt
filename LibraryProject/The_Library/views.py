@@ -32,7 +32,7 @@ def login_verify(request):
             if user is not None:
                 login(request, user)
                 # print(request.user)
-                return render(request, 'Base.html')
+                return redirect("/index/")
             else:
                 return log_in(request)
 
@@ -92,7 +92,7 @@ def search(request, *args, **kwargs):  # function called on first access to sear
 
         return HttpResponseBadRequest("<h1>{{request.method}} is not appropriate for this.")
  else:
-     redirect("/login/")
+     return redirect("/login/")
 
 
 
