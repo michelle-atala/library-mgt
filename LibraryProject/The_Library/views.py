@@ -161,7 +161,7 @@ def search_result(request):  # Display search results using index.html # Called 
       return redirect("/login/")
 
 
-def borrow(request, id):
+def borrowed(request, id):
   if request.user.is_authenticated:
     book_id = id
     returned = False
@@ -173,7 +173,7 @@ def borrow(request, id):
                                                borrow_date=borrow_date,
                                                book_id=book_id)
     transaction.save()
-    return render(request, "borrowed.hml")
+    return render(request, "final.html")
   else:
       return redirect("/login/")
 
@@ -200,12 +200,13 @@ def report(request):
       return redirect("/login/")
 
 
-def terms(request, id):
+def borrow(request, id):
   if request.user.is_authenticated:
     obj = book.objects.filter(id=id)
     my_ctxt = {
         "book": obj
     }
-    return render(request, "terms.html", my_ctxt)
+    return render(request, "borrow.html", my_ctxt)
   else:
       return redirect("/login/")
+
