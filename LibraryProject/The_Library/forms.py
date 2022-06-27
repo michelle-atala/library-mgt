@@ -6,12 +6,12 @@ class SignUp_form(forms.Form):
     last_name = forms.CharField(max_length=50)
     user_name = forms.CharField(max_length=50)
     email = forms.EmailField()
-    password = forms.CharField(max_length=50)
+    password = forms.CharField(max_length=50, widget=forms.PasswordInput)
 
 
 class Login_form(forms.Form):
     user_name = forms.CharField(max_length=50)
-    password = forms.CharField(max_length=50)
+    password = forms.CharField(max_length=50, widget=forms.PasswordInput)
 
 
 # def clean_data(self):

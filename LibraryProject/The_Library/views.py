@@ -80,21 +80,19 @@ def log_out(request):
 
 
 # Create your views here.
-def search(request, *args, **kwargs):  # function called on first access to search.html
- if request.user.is_authenticated:
-    if request.method == 'GET':
-        my_form = Book_search()
-        my_ctxt = {
-            "form": my_form
-        }
-        return render(request, "search.html", my_ctxt)
-    else:  # Render a 400 code
+def search(request):  # function called on first access to search.html
+    if request.user.is_authenticated:
+        if request.method == 'GET':
+            my_form = Book_search()
+            my_ctxt = {
+                "form": my_form
+            }
+            return render(request, "search.html", my_ctxt)
+        else:  # Render a 400 code
 
-        return HttpResponseBadRequest("<h1>{{request.method}} is not appropriate for this.")
- else:
-     redirect("/login/")
-
-
+            return HttpResponseBadRequest("<h1>{{request.method}} is not appropriate for this.")
+    else:
+        return redirect("/login/")
 
 
 #  DON'T REMOVE THIS INDEX FUNCTION
@@ -161,52 +159,60 @@ def search_result(request):  # Display search results using index.html # Called 
       return redirect("/login/")
 
 
-def borrowed(request, id):
-  if request.user.is_authenticated:
-    book_id = id
-    returned = False
-    student = request.user.get_full_name()
-    borrow_date = datetime.date.today()
-    book_name = book.objects.filter(id=id).title
+def borrow(request, id):
+    if request.user.is_authenticated:
+        book_id = id
+        returned = False
+        student = request.user.get_full_name()
+        borrow_date = datetime.date.today()
+        book_name = book.objects.filter(id=id).title
 
-    transaction = borrowed_book.objects.create(returned=returned, student=student, book_name=book_name,
-                                               borrow_date=borrow_date,
-                                               book_id=book_id)
-    transaction.save()
-    return render(request, "final.html")
-  else:
-      return redirect("/login/")
+        transaction = borrowed_book.objects.create(returned=returned, student=student, book_name=book_name,
+                                                   borrow_date=borrow_date,
+                                                   book_id=book_id)
+        transaction.save()
+        return render(request, "borrowed.hml")
+    else:
+        return redirect("/login/")
 
 
 def report(request):
-  if request.user.is_authenticated:
-    obj = borrowed_book.objects.all()
-    for x in obj:
-        return_date = x.borrow_date + datetime.timedelta(weeks=2)
-        time_elapse = datetime.date.today() - return_date
-        if time_elapse.days > 10:
-            x.penalty_due = 15000
-        elif time_elapse.days > 3:
-            x.penalty_due = 5000
+    if request.user.is_authenticated:
+        obj = borrowed_book.objects.all()
+        for x in obj:
+            return_date = x.borrow_date + datetime.timedelta(weeks=2)
+            time_elapse = datetime.date.today() - return_date
+            if time_elapse.days > 10:
+                x.penalty_due = 15000
+            elif time_elapse.days > 3:
+                x.penalty_due = 5000
 
-    obj = borrowed_book.objects.all()
+        obj = borrowed_book.objects.all()
 
-    my_ctxt = {
-        "books": obj
-    }
+        my_ctxt = {
+            "books": obj
+        }
 
-    return render(request, "report.html", my_ctxt)
-  else:
-      return redirect("/login/")
+        return render(request, "report.html", my_ctxt)
+    else:
+        return redirect("/login/")
 
 
-def borrow(request, id):
+def terms(request, id):
   if request.user.is_authenticated:
     obj = book.objects.filter(id=id)
     my_ctxt = {
         "book": obj
     }
-    return render(request, "borrow.html", my_ctxt)
+    return render(request, "terms.html", my_ctxt)
   else:
       return redirect("/login/")
 
+
+def report(request):
+    obj = borrowed_book.objects.all()
+    my_ctxt = {
+        "books": obj
+
+    }
+    return render(request, "admin/report.html", my_ctxt)
