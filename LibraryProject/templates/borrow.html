@@ -1,0 +1,6 @@
+{%extends "Base.html"%}
+{%block content%}
+<h1> Borrow {{book_name}} by {{book_author}}? </h1>
+<form action="{% url 'borrowed' %}" method="POST">{%csrf_token%}
+<button type="submit" class="btn btn-primary">Borrow</button>
+</form>

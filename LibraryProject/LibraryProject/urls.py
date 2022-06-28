@@ -29,7 +29,7 @@ urlpatterns = [
     path('search/', search, name='search'),
     path('search-result/', search_result, name='search_result'),
     path('terms/<int:id>', terms),
-    path('borrow/<int:id>', borrow)
+    path('borrow/<int:id>', borrow),
 
 ]
 # urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_FILES)

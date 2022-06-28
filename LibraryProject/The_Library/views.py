@@ -32,7 +32,7 @@ def login_verify(request):
             if user is not None:
                 login(request, user)
                 # print(request.user)
-                return redirect("/index/")
+                return render(request, 'Base.html')
             else:
                 return log_in(request)
 
@@ -49,8 +49,8 @@ def sign_up(request):
             password = form.cleaned_data['password']
             print(form.cleaned_data)
 
-            # object =Student.objects.create(first_name=first_name,last_name=last_name,user_name=user_name,
-            # email=email,password=password) object.save()
+            # object =Student.objects.create(first_name=first_name,last_name=last_name,user_name=user_name,email=email,password=password)
+            # object.save()
             user = User.objects.create_user(user_name, email, password, first_name=first_name, last_name=last_name)
             user.save()
 
@@ -113,50 +113,50 @@ def search(request):  # function called on first access to search.html
 #      return render(request, "index.html", my_ctxt)
 
 def index(request):
-    if request.user.is_authenticated:
-        my_books = book.objects.all()
+  if request.user.is_authenticated:
+    my_books = book.objects.all()
 
-        context = {
-            'books': my_books
+    context = {
+        'books': my_books
 
-        }
+    }
 
-        return render(request, 'index.html', context)
-    else:
-        return redirect("/login/")
+    return render(request, 'index.html', context)
+  else:
+      return redirect("/login/")
 
 
 def search_result(request):  # Display search results using index.html # Called after submit button is clicked
-    if request.user.is_authenticated:
-        if request.method == 'GET':  # Checking if the request is GET to bind the user data to a fresh form.
-            form = Book_search(request.GET)
+  if request.user.is_authenticated:
+    if request.method == 'GET':  # Checking if the request is GET to bind the user data to a fresh form.
+        form = Book_search(request.GET)
 
-            if form.is_valid():
-                subject_area = form.cleaned_data['subject_area']
-                print(subject_area)
-                obj = list(book.objects.filter(
-                    subject_area__icontains=subject_area))  # Using contains to take care of word-spacing.
+        if form.is_valid():
+            subject_area = form.cleaned_data['subject_area']
+            print(subject_area)
+            obj = list(book.objects.filter(
+                subject_area__icontains=subject_area))  # Using contains to take care of word-spacing.
 
-                my_ctxt = {
+            my_ctxt = {
 
-                    "books": obj,
-                }
-                # d_title = obj.title
-                # my_query = book.objects.filter(title=title)
-                print(obj)
+                "books": obj,
+            }
+            # d_title = obj.title
+            # my_query = book.objects.filter(title=title)
+            print(obj)
 
-                # context = {
-                #     "books": my_query
-                # }
-                return render(request, 'index.html', my_ctxt)
+            # context = {
+            #     "books": my_query
+            # }
+            return render(request, 'index.html', my_ctxt)
 
 
 
-        else:  # Render a 400 code
+    else:  # Render a 400 code
 
-            return HttpResponseBadRequest("<h1>{{request.method}} is not appropriate for this.")
-    else:
-        return redirect("/login/")
+        return HttpResponseBadRequest("<h1>{{request.method}} is not appropriate for this.")
+  else:
+      return redirect("/login/")
 
 
 def borrow(request, id):
@@ -199,14 +199,14 @@ def report(request):
 
 
 def terms(request, id):
-    if request.user.is_authenticated:
-        obj = book.objects.filter(id=id)
-        my_ctxt = {
-            "book": obj
-        }
-        return render(request, "terms.html", my_ctxt)
-    else:
-        return redirect("/login/")
+  if request.user.is_authenticated:
+    obj = book.objects.filter(id=id)
+    my_ctxt = {
+        "book": obj
+    }
+    return render(request, "terms.html", my_ctxt)
+  else:
+      return redirect("/login/")
 
 
 def report(request):
