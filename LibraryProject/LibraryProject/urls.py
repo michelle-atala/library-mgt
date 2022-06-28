@@ -26,9 +26,10 @@ urlpatterns = [
     path('verify/', login_verify, name="verify"),
     path('logout', log_out, name="logout"),
     path('index/', index, name='index'),
+    path('', index, name='home'),
     path('search/', search, name='search'),
     path('search-result/', search_result, name='search_result'),
-    path('borrowed',borrowed,name='borrowed'),
+    path('borrowed/<int:id>',borrowed,name='borrowed'),
     path('borrow/<int:id>', borrow),
 
 ]

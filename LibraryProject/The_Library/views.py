@@ -115,6 +115,7 @@ def search(request):  # function called on first access to search.html
 def index(request):
   if request.user.is_authenticated:
     my_books = book.objects.all()
+    print(request.user.id)
 
     context = {
         'books': my_books
@@ -161,11 +162,11 @@ def search_result(request):  # Display search results using index.html # Called 
 
 def borrowed(request, id):
     if request.user.is_authenticated:
-        book_id = id
+        book_id = book.objects.get(id=id)
         returned = False
-        student = request.user.get_full_name()
+        student = request.user.get_full_name() #student = request.user
         borrow_date = datetime.date.today()
-        book_name = book.objects.filter(id=id).title
+        book_name = book_id.title
 
         transaction = borrowed_book.objects.create(returned=returned, student=student, book_name=book_name,
                                                    borrow_date=borrow_date,
@@ -184,11 +185,15 @@ def report(request):
             time_elapse = datetime.date.today() - return_date
             if time_elapse.days > 10:
                 x.penalty_due = 15000
+                x.save()
             elif time_elapse.days > 3:
                 x.penalty_due = 5000
+                x.save()
+
 
         obj = borrowed_book.objects.all()
-
+       # print(obj)
+        #print(request.user.get_full_name)
         my_ctxt = {
             "books": obj
         }

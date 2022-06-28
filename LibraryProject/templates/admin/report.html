@@ -22,14 +22,15 @@
 
 
 </thead>
-{% endblock %}
+
 <tbody>
 
   {% for x in books %}
     <tr>
         <td>{{x.returned}}</td>
-        <td>{{x.book_id}}</td>
-        <td>{{x.student_id}}</td>
+        <td>{{x.book_id.id}}</td>
+        <td>{{x.book_name}}</td>
+        <td>{{x.student}}</td>       <!--make this x.student_id.id-->
         <td>{{x.borrow_date}}</td>
         <td>{{x.return_date}}</td>
         <td>{{x.penalty_due}}</td>
@@ -37,6 +38,6 @@
     </tr>
     {% endfor %}
 </tbody>
-
+{% endblock %}
 </body>
 </html>
