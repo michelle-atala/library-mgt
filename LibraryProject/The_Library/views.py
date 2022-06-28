@@ -171,7 +171,7 @@ def borrowed(request, id):
                                                    borrow_date=borrow_date,
                                                    book_id=book_id)
         transaction.save()
-        return render(request, "borrowed.hml")
+        return render(request, "final.html")
     else:
         return redirect("/login/")
 

@@ -1,13 +1,14 @@
 {%extends "Base.html"%}
 {%block content%}
 <h1> Borrow {{book.title}} by {{book.author}}? </h1><br>
+{%endblock%}
+{%block content2%}
+<div class="row justify-content-center">
 <form action="{% url 'borrowed' %}" method="POST">{%csrf_token%}
 <button type="submit" class="btn btn-primary">Borrow</button>
 </form>
+</div>
 {%endblock%}
-
-
-
 
 
 
