@@ -32,7 +32,7 @@ def login_verify(request):
             if user is not None:
                 login(request, user)
                 # print(request.user)
-                return render(request, 'Base.html')
+                return redirect('/index/')
             else:
                 return log_in(request)
 
@@ -193,7 +193,7 @@ def report(request):
             "books": obj
         }
 
-        return render(request, "report.html", my_ctxt)
+        return render(request, "admin/report.html", my_ctxt)
     else:
         return redirect("/login/")
 
