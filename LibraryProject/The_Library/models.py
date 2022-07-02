@@ -10,20 +10,20 @@ class book(models.Model):
     borrowed = models.BooleanField(default=False)
 
     def __str__(self):
-        return f"{self.title},{self.author},{self.shelf_number}"
+        return f"{self.id}: {self.title}"
 
 
 class borrowed_book(models.Model):
     returned = models.BooleanField()
     book_id = models.ForeignKey(book, on_delete=models.CASCADE)
-    book_name = models.CharField(max_length=100, default="")  # Remove default on Fresh DB creation
-    student = models.CharField(max_length=100)
+    book_name = models.CharField(max_length=100, default="")    # Remove default on Fresh DB creation
+    student = models.CharField(max_length=100)                  #Make this a ForeignKey(settings.AUTH_USER_MODEL)
     borrow_date = models.DateField()
     return_date = models.DateField(null=True)
     penalty_due = models.IntegerField(default=0)
 
     def __str__(self):
-        return f"{self.student},{self.book_id},{self.borrow_date},{self.return_date},{self.returned},{self.penalty_due}"
+        return f"{self.book_id.title}"
 
 
 # class borrowed(models.Model):
