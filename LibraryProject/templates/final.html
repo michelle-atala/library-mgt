@@ -5,13 +5,28 @@
     <title>Title</title>
 </head>
 <body>
-<h1> Your request has been submitted! Pick up the book at the Library.</h1>
-<h2> Redirecting to homepage... (This takes about 5 seconds)</h2>
-<script>
-    setTimeout(function(){
-    $.get("{% url 'index' %}"), 5000)
-    }
-</script>
+<!--<h1> Your request has been submitted! Pick up the book at the Library.</h1>-->
+<!--<h2> Redirecting to homepage... (This takes about 5 seconds)</h2>-->
+<!--<script>-->
+<!--    setTimeout(function(){-->
+<!--    $.get("{% url 'index' %}"), 5000)-->
+<!--    }-->
+<!--</script>-->
+
+<h1>BOOK Title: {{book.title}}</h1>
+<!--
+1.check for any other user has any other books borrowed in the database
+2.list those books and the deadlines as well as any penalties if any
+3.Student shouldnt be able to have more than 3 books borrowed/in their name
+
+-->
+<h1>Borrowed by:</h1>
+<h1>Any other books Borrowed:</h1>
+<h1>Deadlines:</h1>
+
+<input type="checkbox" onchange="document.getElementById('hello').disabled = !this.checked;">Agree to <a href="">Terms and Conditions</input><br><br>
+<button id="hello" disabled onclick="{% url 'index' %}">Accept</button>
+
 
 </body>
 </html>
