@@ -14,7 +14,7 @@ def book_idx(obj):
 
 
 class borrowed_bookAdmin(admin.ModelAdmin):
-    list_display = ("student", book_idx, "borrow_date", "return_date", "returned", "penalty_due")
+    list_display = ("student", book_idx, "borrow_date", "due_date", "return_date", "returned", "penalty_due")
 
 
 admin.site.register(borrowed_book, borrowed_bookAdmin)

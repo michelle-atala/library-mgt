@@ -114,7 +114,7 @@ def search(request):  # function called on first access to search.html
 
 def index(request):
     if request.user.is_authenticated:
-        my_books = book.objects.filter(borrowed=False)   #.get(returned=True)
+        my_books = book.objects.filter(borrowed=False)  # .get(returned=True)
         print(request.user.id)
 
         context = {
@@ -166,15 +166,15 @@ def borrowed(request, id):
         returned = False
         student = request.user.get_full_name()  # student = request.user
         borrow_date = datetime.date.today()
+        due_date = borrow_date + datetime.timedelta(weeks=2)
         book_name = book_id.title
         borrowed = not returned
         book_id.borrowed = borrowed
         book_id.save()
         book_id = book.objects.get(id=id)
 
-
         transaction = borrowed_book.objects.create(returned=returned, student=student, book_name=book_name,
-                                                   borrow_date=borrow_date,
+                                                   borrow_date=borrow_date, due_date = due_date,
                                                    book_id=book_id)
         transaction.save()
 
@@ -187,7 +187,7 @@ def borrowed(request, id):
 
 def report(request):
     if request.user.is_authenticated:
-        obj = borrowed_book.objects.all() #get non-returned books instead
+        obj = borrowed_book.objects.all()  # get non-returned books instead
         for x in obj:
             return_date = x.borrow_date + datetime.timedelta(weeks=2)
             time_elapse = datetime.date.today() - return_date

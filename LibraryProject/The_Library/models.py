@@ -19,6 +19,7 @@ class borrowed_book(models.Model):
     book_name = models.CharField(max_length=100, default="")  # Remove default on Fresh DB creation
     student = models.CharField(max_length=100)  # Make this a ForeignKey(settings.AUTH_USER_MODEL)
     borrow_date = models.DateField()
+    due_date = models.DateField()
     return_date = models.DateField(null=True)
     penalty_due = models.IntegerField(default=0)
 
