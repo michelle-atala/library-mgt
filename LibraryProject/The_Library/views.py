@@ -47,15 +47,19 @@ def sign_up(request):
             user_name = form.cleaned_data['user_name']
             email = form.cleaned_data['email']
             password = form.cleaned_data['password']
+            re_enter_password= form.cleaned_data['re_enter_password']
             print(form.cleaned_data)
 
-            # object =Student.objects.create(first_name=first_name,last_name=last_name,user_name=user_name,email=email,password=password)
-            # object.save()
-            user = User.objects.create_user(user_name, email, password, first_name=first_name, last_name=last_name)
-            user.save()
+            if password==re_enter_password:
 
-            return redirect(log_in)
+                # object =Student.objects.create(first_name=first_name,last_name=last_name,user_name=user_name,email=email,password=password)
+                # object.save()
+                user = User.objects.create_user(user_name, email, password, first_name=first_name, last_name=last_name)
+                user.save()
 
+                return redirect(log_in)
+            else :
+                return redirect(sign_up)
 
     else:
         form1 = SignUp_form()
