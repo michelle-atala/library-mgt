@@ -113,65 +113,73 @@ def search(request):  # function called on first access to search.html
 #      return render(request, "index.html", my_ctxt)
 
 def index(request):
-  if request.user.is_authenticated:
-    my_books = book.objects.all()
-    print(request.user.id)
+    if request.user.is_authenticated:
+        my_books = book.objects.filter(borrowed=False)   #.get(returned=True)
+        print(request.user.id)
 
-    context = {
-        'books': my_books
+        context = {
+            'books': my_books
 
-    }
+        }
 
-    return render(request, 'index.html', context)
-  else:
-      return redirect("/login/")
+        return render(request, 'index.html', context)
+    else:
+        return redirect("/login/")
 
 
 def search_result(request):  # Display search results using index.html # Called after submit button is clicked
-  if request.user.is_authenticated:
-    if request.method == 'GET':  # Checking if the request is GET to bind the user data to a fresh form.
-        form = Book_search(request.GET)
+    if request.user.is_authenticated:
+        if request.method == 'GET':  # Checking if the request is GET to bind the user data to a fresh form.
+            form = Book_search(request.GET)
 
-        if form.is_valid():
-            subject_area = form.cleaned_data['subject_area']
-            print(subject_area)
-            obj = list(book.objects.filter(
-                subject_area__icontains=subject_area))  # Using contains to take care of word-spacing.
+            if form.is_valid():
+                subject_area = form.cleaned_data['subject_area']
+                print(subject_area)
+                obj = list(book.objects.filter(
+                    subject_area__icontains=subject_area))  # Using contains to take care of word-spacing.
 
-            my_ctxt = {
+                my_ctxt = {
 
-                "books": obj,
-            }
-            # d_title = obj.title
-            # my_query = book.objects.filter(title=title)
-            print(obj)
+                    "books": obj,
+                }
+                # d_title = obj.title
+                # my_query = book.objects.filter(title=title)
+                print(obj)
 
-            # context = {
-            #     "books": my_query
-            # }
-            return render(request, 'index.html', my_ctxt)
+                # context = {
+                #     "books": my_query
+                # }
+                return render(request, 'index.html', my_ctxt)
 
 
 
-    else:  # Render a 400 code
+        else:  # Render a 400 code
 
-        return HttpResponseBadRequest("<h1>{{request.method}} is not appropriate for this.")
-  else:
-      return redirect("/login/")
+            return HttpResponseBadRequest("<h1>{{request.method}} is not appropriate for this.")
+    else:
+        return redirect("/login/")
 
 
 def borrowed(request, id):
     if request.user.is_authenticated:
         book_id = book.objects.get(id=id)
         returned = False
-        student = request.user.get_full_name() #student = request.user
+        student = request.user.get_full_name()  # student = request.user
         borrow_date = datetime.date.today()
         book_name = book_id.title
+        borrowed = not returned
+        book_id.borrowed = borrowed
+        book_id.save()
+        book_id = book.objects.get(id=id)
+
 
         transaction = borrowed_book.objects.create(returned=returned, student=student, book_name=book_name,
                                                    borrow_date=borrow_date,
                                                    book_id=book_id)
         transaction.save()
+
+        book_id.borrowed = borrowed
+
         return render(request, "final.html")
     else:
         return redirect("/login/")
@@ -179,10 +187,11 @@ def borrowed(request, id):
 
 def report(request):
     if request.user.is_authenticated:
-        obj = borrowed_book.objects.all()
+        obj = borrowed_book.objects.all() #get non-returned books instead
         for x in obj:
             return_date = x.borrow_date + datetime.timedelta(weeks=2)
             time_elapse = datetime.date.today() - return_date
+
             if time_elapse.days > 10:
                 x.penalty_due = 15000
                 x.save()
@@ -190,10 +199,9 @@ def report(request):
                 x.penalty_due = 5000
                 x.save()
 
-
         obj = borrowed_book.objects.all()
-       # print(obj)
-        #print(request.user.get_full_name)
+        # print(obj)
+        # print(request.user.get_full_name)
         my_ctxt = {
             "books": obj
         }
@@ -204,12 +212,12 @@ def report(request):
 
 
 def borrow(request, id):
-  if request.user.is_authenticated:
-    obj = book.objects.get(id=id)
-    print(obj, id)
-    my_ctxt = {
-        "book": obj
-    }
-    return render(request, "borrow.html", my_ctxt)
-  else:
-      return redirect("/login/")
+    if request.user.is_authenticated:
+        obj = book.objects.get(id=id)
+        print(obj, id)
+        my_ctxt = {
+            "book": obj
+        }
+        return render(request, "borrow.html", my_ctxt)
+    else:
+        return redirect("/login/")
