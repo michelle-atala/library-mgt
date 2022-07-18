@@ -4,6 +4,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.http import HttpResponseBadRequest
 from django.shortcuts import render, redirect
+from django.contrib import messages
 
 from .forms import Book_search
 from .forms import SignUp_form, Login_form
@@ -47,7 +48,10 @@ def sign_up(request):
             user_name = form.cleaned_data['user_name']
             email = form.cleaned_data['email']
             password = form.cleaned_data['password']
+            re_enter_password= form.cleaned_data['re_enter_password']
             print(form.cleaned_data)
+
+
 
             # object =Student.objects.create(first_name=first_name,last_name=last_name,user_name=user_name,email=email,password=password)
             # object.save()
@@ -55,6 +59,10 @@ def sign_up(request):
             user.save()
 
             return redirect(log_in)
+        else:
+
+            return redirect(sign_up)
+        # #     messages.error(request,"Passwords are not matching.")
 
 
     else:
