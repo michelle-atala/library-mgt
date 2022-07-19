@@ -26,9 +26,9 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-kvwk^bl9&h44pjx@x6b%cx$na6q67lkmmhxrk919%ck+1=c79c'
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = [ 'library--mgt.herokuapp.com'],['127.0.0.1']
+ALLOWED_HOSTS = ['localhost','library--mgt.herokuapp.com' , '127.0.0.1']
 
 
 # Application definition
