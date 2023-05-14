@@ -60,7 +60,7 @@ def sign_up(request):
         else:
 
             return redirect(sign_up)
-        # #     messages.error(request,"Passwords are not matching.")
+        
 
 
     else:
